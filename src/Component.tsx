@@ -1,23 +1,27 @@
 import React, { useState } from "react";
 
 export default function Component() {
-  const [state, setState] = useState<React.ReactElement[]>([]);
+  const [state, setState] = useState<HTMLElement[]>([]);
+  const childs = React.useMemo(() => {
+    return state.map((_, index) => <canvas key={index} />)
+  }, [state]);
+
 
   React.useEffect(() => {
     console.log("start child");
     const interval = setInterval(() => {
       console.log("tick");
       setState((currentState) => {
-        const key = `img-${currentState.length + 1}`;
         return [
           ...currentState,
-          <img key={key} src="" alt={key} />
+          document.createElement('svg'),
         ];
       });
-    }, 5);
+    }, 10);
 
     return () => {
       console.log("clear child");
+      setState([]);
       clearInterval(interval);
     };
   }, []);
@@ -28,7 +32,8 @@ export default function Component() {
     >
       <h5>Hello from detached Portal</h5>
       <h4>{state.length}</h4>
-      {state}
+      {state.length > 0 ? state.map((_, index) => <img key={`i-${index}`} />) : null}
+      {childs}
     </div>
   );
 }

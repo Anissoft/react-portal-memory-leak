@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/react-portal-memory-leak/static/js/:file", "destination": "/static/js/:file" },
+    { "source": "/react-portal-memory-leak/static/css/:file", "destination": "/static/css/:file" }
+  ]
+}
